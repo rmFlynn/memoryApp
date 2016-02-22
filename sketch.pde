@@ -22,7 +22,9 @@
 
   */
 //put the number of image sets here
-int numSets = 3;
+int numSets=3;
+
+int ImageSet=1;
 
 
 PImage[] img= new PImage[30]  ;  // Declare variable "a" of type PImage
@@ -46,7 +48,7 @@ float timeT2;
 PrintWriter dataWriter;
 import java.io.File;
 import java.io.IOException;
-  
+
 
 
 
@@ -70,7 +72,6 @@ void setup() {
   //textSize(95);//on my tablet should be fixed for new device but i have not done it yet
   textSize(60);//on pc
   fill(0);
-  loadImages(); // Load the image into the program  
   step = 1;
   String dirName;
   try{
@@ -118,8 +119,7 @@ void draw() {
 void loadImages(){
 // The image file must be in the data f 
   for(int j=0; j<30;j++){
-    img[j]=loadImage(j+".jpg");
-    
+    img[j]=loadImage("S"+ImageSet+"P"+j+".jpg");
   }
 }
 
@@ -155,14 +155,22 @@ float lowcom;
   background(0); //black background
   float xlok= lowcom * .1;
   float ylok= lowcom * .3;
-  textSize(90);
+  textSize(100);
   textAlign(CENTER);
   for(int i=0;i<numSets;i++){
       fill(0, 102, 153);
       rect( i*(width/numSets),0, (i+1)*(width/numSets),height);
       fill(0);
-      text("Use Image\nSet\n"+i,(i)*(width/numSets)+(width/numSets)/2,height/2);
+      text("Use Image\nSet\n"+(i+1),(i)*(width/numSets)+(width/numSets)/2,height/2);
   }
+  for(int i=0;i<3;i++){
+    if(mouseX > i*(width/numSets) && mouseX < (i+1)*(width/numSets)){
+        textSize(90);
+        ImageSet= i+1;
+        buffer=millis();
+        loadImages(); // Load the image into the program  
+        step++;
+    }
 }
 
 
