@@ -21,7 +21,7 @@
 
 
   */
-\\put the number of image sets here
+//put the number of image sets here
 int numSets = 3;
 
 
@@ -157,9 +157,9 @@ float lowcom;
   float ylok= lowcom * .3;
   for(int i=0;i<numSets;i++){
       fill(0, 102, 153);
-      rect(i*(width/numSets),0, (i+1)*(width/numSets),height);
+      rect( i*(width/numSets),0, (i+1)*(width/numSets),height);
       fill(0);
-      text("Use Image\nSet\n" i, lowcom*.12 +lowcom*.2*i, lowcom*.35 +lowcom*.2*j);
+      text("Use Image\nSet\n"+i,(i+1)*(width/numSets),height/2);
   }
 }
 
@@ -377,7 +377,7 @@ void setSubjectGen(){
 void setSubject(){
   switch (step) {
     case 1:  textAlign(LEFT);
-             setImagSet();//obvious method name is obvious
+             setImageSet();//obvious method name is obvious
              break;
     case 2:  textAlign(LEFT);
              setSubjectNum() ;//obvious method name is obvious
