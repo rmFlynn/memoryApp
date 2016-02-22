@@ -155,11 +155,13 @@ float lowcom;
   background(0); //black background
   float xlok= lowcom * .1;
   float ylok= lowcom * .3;
+  textSize(90);
+  textAlign(CENTER);
   for(int i=0;i<numSets;i++){
       fill(0, 102, 153);
       rect( i*(width/numSets),0, (i+1)*(width/numSets),height);
       fill(0);
-      text("Use Image\nSet\n"+i,(i+1)*(width/numSets),height/2);
+      text("Use Image\nSet\n"+i,(i)*(width/numSets)+(width/numSets)/2,height/2);
   }
 }
 
