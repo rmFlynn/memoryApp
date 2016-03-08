@@ -5,7 +5,7 @@
    **                                                                   **
    ***********************************************************************
    ***********************************************************************
-
+test
 
 
 */
@@ -26,8 +26,13 @@ int numSets=3;
 
 int ImageSet=1;
 
+int set=1;
 
-PImage[] img= new PImage[30]  ;  // Declare variable "a" of type PImage
+int imagesInSet = 30;
+
+int imageInOne=20;
+
+PImage[][] img = new PImage[numSets][imagesInSet]  ;  // Declare variable "a" of type PImage
 int step;
 int testNum=1;
 int imageRight;
@@ -74,6 +79,7 @@ void setup() {
   fill(0);
   step = 1;
   String dirName;
+  loadImages(); // Load the image into the program  
   try{
     dirName = "MemData";
     File newFile = new File(dirName);
@@ -118,8 +124,10 @@ void draw() {
 
 void loadImages(){
 // The image file must be in the data f 
-  for(int j=0; j<30;j++){
-    img[j]=loadImage("S"+ImageSet+"P"+j+".jpg");
+  for (int i=0;i < numSets; i++){
+  for(int j=0; j<imagesInSet-1;j++){
+    img[i][j]=loadImage("S"+(i+1)+"P"+(j+1)+".jpg");
+  }
   }
 }
 
@@ -163,16 +171,16 @@ float lowcom;
       fill(0);
       text("Use Image\nSet\n"+(i+1),(i)*(width/numSets)+(width/numSets)/2,height/2);
   }
-  for(int i=0;i<3;i++){
+  for(int i=0;i<numSets;i++){
     if(mouseX > i*(width/numSets) && mouseX < (i+1)*(width/numSets)){
         textSize(90);
-        ImageSet= i+1;
+        set=i;
         buffer=millis();
-        loadImages(); // Load the image into the program  
+        fill(0);
         step++;
     }
+  }
 }
-
 
 
 /**********************************************
@@ -533,7 +541,7 @@ void welcomeOne(){
 */
 
 void displayOne(){
-  imageLeft =int(random(0,19.99));
+  imageLeft =int(random(0,imageInOne-1));
   boolean boo=boolean(imageLeft%2);
   if(boo){
     imageRight=imageLeft-1;
@@ -573,7 +581,7 @@ void feedBack(int choice){
     corectly[imageRight]=false;
     corectly[imageLeft]=false;
   }
-  buffer=millis();
+  
   step++;
 } 
 
@@ -590,15 +598,19 @@ void feedBack(int choice){
 void evalOne(){
   int choice=0;
   boolean boo;
-  if(mousePressed && millis()-buffer > 500 && mouseX > width/1.7){
+  if (mousePressed && millis()-buffer > 500 && mouseX > width/1.7) {
     //This is the left image or image n
     choice=imageLeft; 
     feedBack(choice);
+    buffer=millis();
+    mousePressed=false;
   }
-  if(mousePressed && millis()-buffer > 500 && mouseX < width/2.3){
+  else if(mousePressed && millis()-buffer > 500 && mouseX < width/2.3){
     //This is the right image or image m
     choice=imageRight;
     feedBack(choice);
+    buffer=millis();
+    mousePressed=false;
   } 
 }
 
@@ -671,7 +683,7 @@ void welcomeTwo(){
 
 void sample(){
   if( buffer+1000< millis()){
-    sampelImage=int(random(20,30));
+    sampelImage=int(random(imageInOne,imagesInSet-1));
     randImage=sampelImage;
     putsImage(sampelImage);
     step++;
@@ -693,7 +705,7 @@ void hold(){
   if(buffer+1000 < millis()){
     background(131,165,174);
     while(randImage==sampelImage){
-      randImage =int(random(20,30));
+      randImage =int(random(imageInOne,imagesInSet-1));
     }
     buffer=millis();
     step++;
@@ -733,7 +745,7 @@ void select(){
 */
 void putsImage(int i){
   background(131,165,174);
-  image(img[i], width/3, height/4, width/3, width/3 );
+  image(img[set][i], width/3, height/4, width/3, width/3 );
 }
 
 /**********************************************
@@ -752,11 +764,13 @@ void evalTwo(){
     //This is the left image or image n
     choice=imageLeft; 
     feedBackTwo(choice);
+    mousePressed=false;
   }
   if(mousePressed && millis()-buffer > 500 && mouseX < width/2.3){
     //This is the right image or image m
     choice=imageRight;
     feedBackTwo(choice);
+    mousePressed=false;
   } 
 }
 
@@ -840,8 +854,8 @@ void welcomeThree(){
 
 void putsImages(int i, int k){
   background(131,165,174);
-  image(img[k], width/16, height/4, width/3, width/3 );
-  image(img[i], (9.5 * width)/16, height/4, width/3 , width/3 );
+  image(img[set][k], width/16, height/4, width/3, width/3 );
+  image(img[set][i], (9.5 * width)/16, height/4, width/3 , width/3 );
 }
 
 /**********************************************
